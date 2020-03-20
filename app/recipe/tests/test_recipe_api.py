@@ -110,7 +110,8 @@ class PrivateRecipeApiTests(TestCase):
 
         self.assertEqual(res.status_code, status.HTTP_201_CREATED)
         recipe = Recipe.objects.get(id=res.data['id'])
-        self.assertEqual(res.data['title'], payload['title'])
+        for key in payload.keys():
+            self.assertEqual(payload[key], getattr(recipe, key))
 
     def test_Create_recipe_with_tags(self):
 
